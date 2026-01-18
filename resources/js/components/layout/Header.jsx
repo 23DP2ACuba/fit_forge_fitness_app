@@ -84,11 +84,13 @@ export default function Header() {
 
           <div className="right-section">
             <div className="search-container">
-              <input
-                type="text"
-                placeholder="Search workouts or meals..."
-                className="search-input"
-              />
+              <div className="search-wrapper">
+                <input
+                  type="text"
+                  placeholder="Search workouts or meals..."
+                  className="search-input"
+                />
+              </div>
             </div>
             <br/>
             <div className="auth-links">

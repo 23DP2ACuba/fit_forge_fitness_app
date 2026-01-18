@@ -1,6 +1,6 @@
 import React from 'react';
 import Header from '../components/layout/Header';
-// import Footer from '../components/layout/Footer';
+import Footer from '../components/layout/Footer';
 
 // import HeroSection from '../components/home/hero_section';
 // import FeaturesSection from '../components/home/features_section';
@@ -16,9 +16,9 @@ export default function Home() {
                 <HeroSection />
                 <FeaturesSection />
                 <CTASection />
-            </main>
+            </main> */
 
-            <Footer /> */}
+            <Footer />}
         </div>
     );
 }

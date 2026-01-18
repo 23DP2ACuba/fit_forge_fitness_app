@@ -1,5 +1,5 @@
 :root {
-  --header-bg: linear-gradient(to right, #1a1a1e, #111114);
+  --header-bg: #161618;
   --header-shadow: 0 4px 25px rgba(0, 0, 0, 0.45);
   --accent-red: rgb(221, 57, 57);
   --text: rgb(222, 213, 213);
@@ -22,12 +22,6 @@
   border-bottom: 2px solid rgb(91, 91, 92);
   transition: all 0.3s ease;
   height: 100px;
-}
-
-.header.scrolled {
-  background: rgba(17, 17, 20, 0.92);
-  backdrop-filter: blur(12px);
-  box-shadow: var(--header-shadow);
 }
 
 .header-content {
@@ -61,7 +55,7 @@
 }
 
 .app-name {
-  font-weight: 700;
+  font-weight: 7000;
   font-size: 1.25rem;
   line-height: 1.1;
   letter-spacing: -0.5px;
@@ -89,7 +83,7 @@
 .nav-list a {
   color: var(--text-light);
   text-decoration: none;
-  font-weight: 500;
+  font-weight: 1rem;
   transition: color 0.2s ease;
 }
 
@@ -120,19 +114,47 @@
   width: 100%;
   padding: 0.65rem 1rem;
   padding-left: 1.1rem;
-  border: 1px solid #374151;
-  border-radius: 8px;
+  border: 2px solid #ffffff;
   background: rgba(30, 30, 36, 0.7);
   color: #ffffff;
-  font-size: 0.95rem;
+  font-size: 1rem;
   transition: all 0.25s ease;
 }
 
+
 .search-input:focus {
   outline: none;
-  border-color: var(--accent-red);
-  box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.18);
+  box-shadow: 0 0 0 3px rgba(226, 26, 65, 0.6);
 }
+.search-input:hover {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(226, 26, 65, 0);
+  border: 2px solid transparent;
+  transition: all 0.25s ease;
+}
+
+.search-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+.search-wrapper::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 50%;
+  background: rgb(226, 26, 65);
+  transform: translateY(-50%) scaleX(0);
+  transform-origin: left;
+  transition: transform 0.3s ease;
+}
+
+.search-wrapper:hover::after {
+  transform: translateY(-50%) scaleX(0.2);
+  height: 100%;
+  width: 10%;
+}
+
 
 .search-input:focus-visible + .search-glow {
   opacity: 1;
@@ -387,4 +409,12 @@
 .mobile-auth-btn.register {
   background: #8b5cf6;
   color: #ffffff;
+}
+
+.footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: var(--header-bg);
 }

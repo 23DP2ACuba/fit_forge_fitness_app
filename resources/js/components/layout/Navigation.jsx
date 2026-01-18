@@ -18,3 +18,4 @@ export default function Navigation({ onLinkClick = () => {}, mobile = false }) {
     </ul>
   )
 }
+
