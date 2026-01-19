@@ -179,14 +179,22 @@
 
 .auth-links {
   display: none;
-  gap: 1.75rem;
+  gap: auto;
   align-items: center;
+  width: 200px;  
 }
 
 @media (min-width: 900px) {
   .auth-links {
     display: flex;
   }
+}
+
+.user-auth-stack {
+  display: flex;
+  flex-direction: column;  
+  align-items: flex-end;    
+  gap: 0.5rem;
 }
 
 .auth-button {
@@ -417,4 +425,8 @@
     left: 0;
     width: 100%;
     background-color: var(--header-bg);
+}
+
+.user-name {
+  width: 20%;
 }

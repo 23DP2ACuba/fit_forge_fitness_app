@@ -1,7 +1,11 @@
 import axios from 'axios'
 
-axios.defaults.withCredentials = true
-axios.defaults.withXSRFToken = true
-axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest'
+const instance = axios.create({
+  baseURL: 'http://127.0.0.1:8000',
+  withCredentials: true,
+  headers: {
+    'X-Requested-With': 'XMLHttpRequest',
+  },
+})
 
-export default axios
+export default instance

@@ -1,68 +1,73 @@
-import React from 'react'
-import { useState, useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Menu, X } from 'lucide-react'
-import Navigation from './Navigation' 
+import Navigation from './HavaNagila'
 import axios from '../lib/axios'
 import { login, register } from '../services/auth'
+import useAuth from '../hooks/useAuth'
 
 export default function Header() {
+  const maxLen = 25
   const [isScrolled, setIsScrolled] = useState(false)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
-  const [activeAuthModal, setActiveAuthModal] = useState(null) 
+  const [activeAuthModal, setActiveAuthModal] = useState(null)
+
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [passwordConfirmation, setPasswordConfirmation] = useState('')
   const [name, setName] = useState('')
   const [error, setError] = useState(null)
-  
+
+  const { user, loading, setUser, logout } = useAuth()
+
+  useEffect(() => {
+    const onScroll = () => setIsScrolled(window.scrollY > 10)
+    window.addEventListener('scroll', onScroll)
+    return () => window.removeEventListener('scroll', onScroll)
+  }, [])
+
+  const resetForm = () => {
+    setEmail('')
+    setPassword('')
+    setPasswordConfirmation('')
+    setName('')
+    setError(null)
+  }
+
+  const closeAll = () => {
+    setIsMobileMenuOpen(false)
+    setActiveAuthModal(null)
+    resetForm()
+  }
+
   const handleLogin = async (e) => {
     e.preventDefault()
-
     try {
       await login({ email, password })
+      const res = await axios.get('/user')
+      setUser(res.data)
       closeAll()
-    } catch (err) {
-      setError('Invalid credentials')
+    } catch {
+      console.error(err.response?.data)
+      setError(err.response?.data?.message || 'LogIn failed')
     }
   }
 
   const handleRegister = async (e) => {
     e.preventDefault()
-
     try {
       await register({
         name,
         email,
         password,
         password_confirmation: passwordConfirmation,
-      });
+      })
+      const res = await axios.get('/user')
+      setUser(res.data)
       closeAll()
-    } catch (err) {
-      setError('Registration failed');
+    } catch {
+      console.error(err.response?.data)
+      setError(err.response?.data?.message || 'Registration failed')
     }
-  }
-
-  useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 10)
-    }
-    window.addEventListener('scroll', handleScroll)
-    return () => window.removeEventListener('scroll', handleScroll)
-  }, [])
-
-  const toggleMobileMenu = () => {
-    setIsMobileMenuOpen(!isMobileMenuOpen)
-    if (!isMobileMenuOpen) setActiveAuthModal(null)
-  }
-
-  const openAuthModal = (type) => {
-    setActiveAuthModal(type)
-    setIsMobileMenuOpen(false) 
-  }
-
-  const closeAll = () => {
-    setIsMobileMenuOpen(false)
-    setActiveAuthModal(null)
   }
 
   return (
@@ -70,12 +75,8 @@ export default function Header() {
       <header className={`header ${isScrolled ? 'scrolled' : ''}`}>
         <div className="header-content">
           <div className="logo-container">
-            <div className="logo">FF</div>
-            <div className="app-name">
-              fit
-              <br />
-              forge
-            </div>
+              <a className="logo" href="">FF</a>
+              <div className="app-name">fit<br />forge</div>
           </div>
 
           <nav className="desktop-nav">
@@ -93,31 +94,41 @@ export default function Header() {
               </div>
             </div>
             <br/>
+            
             <div className="auth-links">
-              <button
-                className="auth-button login"
-                onClick={() => openAuthModal('login')}
-              >
-                Log In
-              </button>
-              <button
-                className="auth-button login"
-                onClick={() => openAuthModal('register')}
-              >
-                Register
-              </button>
+              {loading ? null : user ? (
+                <div className="user-auth-stack">
+                  <span className="auth-button login">
+                    {user.name}
+                  </span>
+
+                  <button className="auth-button login" onClick={logout}>
+                    Logout
+                  </button>
+                </div>
+              ) : (
+                <>
+                  <button
+                    className="auth-button login"
+                    onClick={() => setActiveAuthModal('login')}
+                  >
+                    Log In
+                  </button>
+                  <button
+                    className="auth-button login"
+                    onClick={() => setActiveAuthModal('register')}
+                  >
+                    Register
+                  </button>
+                </>
+              )}
             </div>
 
             <button
               className="mobile-menu-btn"
-              onClick={toggleMobileMenu}
-              aria-label="Toggle menu"
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             >
-              {isMobileMenuOpen ? (
-                <X size={28} strokeWidth={2.5} />
-              ) : (
-                <Menu size={28} strokeWidth={2.5} />
-              )}
+              {isMobileMenuOpen ? <X /> : <Menu />}
             </button>
           </div>
         </div>
@@ -134,13 +145,13 @@ export default function Header() {
           <div className="mobile-auth">
             <button
               className="mobile-auth-btn login"
-              onClick={() => openAuthModal('login')}
+              onClick={() => setActiveAuthModal('login')}
             >
               Log In
             </button>
             <button
               className="mobile-auth-btn register"
-              onClick={() => openAuthModal('register')}
+              onClick={() => setActiveAuthModal('register')}
             >
               Register
             </button>
@@ -241,6 +252,7 @@ export default function Header() {
           </div>
         </div>
       )}
+
     </>
   )
 }
