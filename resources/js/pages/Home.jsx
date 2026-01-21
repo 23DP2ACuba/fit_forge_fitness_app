@@ -2,23 +2,23 @@ import React from 'react';
 import Header from '../components/layout/Header';
 import Footer from '../components/layout/Footer';
 
-// import HeroSection from '../components/home/hero_section';
-// import FeaturesSection from '../components/home/features_section';
-// import CTASection from '../components/home/cta_section';
+import HeroSection from '../components/home/HeroSection';
+import FeaturesSection from '../components/home/FeaturesSection';
+import CTASection from '../components/home/CTASection';
 
 
 export default function Home() {
     return (
-        <div className="home_page_wrapper">
+        <div className="home-page-wrapper" id="#home">
             <Header />
 
-            {/* <main>
+            <main>
                 <HeroSection />
                 <FeaturesSection />
                 <CTASection />
-            </main> */
+            </main>
 
-            <Footer />}
+            <Footer />
         </div>
-    );
+    )
 }

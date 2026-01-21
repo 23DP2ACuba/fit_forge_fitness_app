@@ -1,5 +1,5 @@
-
 import React from 'react'
+
 export default function Footer({ onLinkClick = () => {}, mobile = false }) {
   const links = [
     { label: "Contact", href: "/contact" },
@@ -9,15 +9,17 @@ export default function Footer({ onLinkClick = () => {}, mobile = false }) {
 
   return (
     <footer className='footer'>
-      <ul className={`nav-list ${mobile ? 'mobile' : ''}`}>
-        {links.map((link) => (
-          <li key={link.href}>
-            <a href={link.href} onClick={onLinkClick}>
-              {link.label}
-            </a>
-          </li>
-        ))}
-      </ul>
+      <div  className='footer-text'>
+        <ul className={`nav-list ${mobile ? 'mobile' : ''}`}>
+            {links.map((link) => (
+              <li key={link.href}>
+                <a href={link.href} onClick={onLinkClick}>
+                  {link.label}
+                </a>
+              </li>
+            ))}
+        </ul>
+      </div>
     </footer>
 
   )
