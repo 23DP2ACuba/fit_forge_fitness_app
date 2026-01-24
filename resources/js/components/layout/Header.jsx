@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import { Menu, X } from 'lucide-react'
-import Navigation from './HavaNagila'
+import Navigation from './Navigation'
 import axios from '../lib/axios'
 import { login, register } from '../services/auth'
 import useAuth from '../hooks/useAuth'
 
 export default function Header() {
-  const maxLen = 25
   const [isScrolled, setIsScrolled] = useState(false)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const [activeAuthModal, setActiveAuthModal] = useState(null)
